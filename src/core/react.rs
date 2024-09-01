@@ -1,3 +1,4 @@
+use super::FileKind;
 use crate::core::react;
 use genco::tokens::ItemStr;
 use genco::{fmt, impl_lang};
@@ -140,7 +141,7 @@ pub struct Format {}
 /// Configuration for React.
 #[derive(Debug, Default)]
 pub struct Config {
-    is_client: bool,
+    file_kind: Option<FileKind>,
     module_path: Option<RelativePathBuf>,
 }
 
@@ -151,14 +152,21 @@ impl Config {
     {
         Self {
             module_path: Some(module_path.into()),
-            is_client: self.is_client,
+            file_kind: self.file_kind,
         }
     }
 
     pub fn is_client_component(self) -> Self {
         Self {
             module_path: self.module_path,
-            is_client: true,
+            file_kind: Some(FileKind::ClientComponent),
+        }
+    }
+
+    pub fn is_server_action(self) -> Self {
+        Self {
+            module_path: self.module_path,
+            file_kind: Some(FileKind::ServerAction),
         }
     }
 }
@@ -261,14 +269,23 @@ impl React {
             }
         }
 
-        if modules.is_empty() && wildcards.is_empty() && !config.is_client {
+        if modules.is_empty() && wildcards.is_empty() && config.file_kind.is_none() {
             return;
         }
 
-        if config.is_client {
+        if let Some(kind) = &config.file_kind {
             out.push();
-            quote_in! { *out =>
-                "use client";
+            match kind {
+                FileKind::ClientComponent => {
+                    quote_in! { *out =>
+                        "use client";
+                    }
+                }
+                FileKind::ServerAction => {
+                    quote_in! { *out =>
+                        "use server";
+                    }
+                }
             }
             out.line();
         }
