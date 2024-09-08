@@ -1,6 +1,10 @@
 use super::error::Error;
 use crate::core::utils::copy_dir_all;
-use std::path::{Path, PathBuf};
+use std::{
+    env,
+    path::{Path, PathBuf},
+    process::Command,
+};
 use strum::IntoEnumIterator;
 use which::which;
 
@@ -13,8 +17,8 @@ enum SupportedPkgManagers {
 }
 
 pub struct Project {
-    output_path: String,
-    pkg_manager: PathBuf,
+    pub output_path: String,
+    pub pkg_manager: PathBuf,
 }
 
 impl Project {
@@ -51,6 +55,7 @@ impl Project {
 
         let directories = vec![
             (".nec_modules/config", ""),
+            (".nec_modules/public", "public"),
             (".nec_modules/components", "src/app/(components)"),
             (".nec_modules/database", "src/database"),
             (".nec_modules/lib", "src/lib"),
@@ -62,6 +67,24 @@ impl Project {
             copy_dir_all(&target_dir, destination)
                 .map_err(|_| Error::CouldNotCopyDir(target_dir))?;
         }
+
+        Ok(())
+    }
+
+    pub fn install_deps(&self) -> Result<(), Error> {
+        let original_dir = env::current_dir().map_err(|_| Error::FailedToSaveCurrentDir)?;
+        env::set_current_dir("output").map_err(|_| Error::CouldNotChangeCurrentDir)?;
+
+        Command::new(
+            self.pkg_manager
+                .to_str()
+                .ok_or(Error::InvalidPkgManagerPath)?,
+        )
+        .args(["install"])
+        .output()
+        .map_err(|_| Error::FailedToRunChildProcess)?;
+
+        env::set_current_dir(original_dir).map_err(|_| Error::CouldNotChangeCurrentDir)?;
 
         Ok(())
     }
