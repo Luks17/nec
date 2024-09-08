@@ -1,25 +1,32 @@
-use genco::{quote, Tokens};
-use nec::core::{
-    out::write_file,
-    react::{self, React},
-    FileKind,
-};
+// use genco::{quote, Tokens};
+// use nec::{core::{
+//     out::write_file,
+//     react::{self, React},
+//     FileKind,
+// }, setup::init};
 
-fn main() {
-    let use_state = &react::import("react", "useState");
-    let app_tks: Tokens<React> = quote! {
-        export default function Page() {
-            const [count, setCount] = $use_state(0);
+use anyhow::Result;
+use nec::setup::init;
 
-            return <>
-                <h1>Hello $("a")!</h1>
+fn main() -> Result<()> {
+    // let use_state = &react::import("react", "useState");
+    // let app_tks: Tokens<React> = quote! {
+    //     export default function Page() {
+    //         const [count, setCount] = $use_state(0);
+    //
+    //         return <>
+    //             <h1>Hello $("a")!</h1>
+    //
+    //             <button onClick={() => setCount((count) => count + 1)}>
+    //                 Count is {count}
+    //             </button>
+    //         </>
+    //     }
+    // };
+    //
+    // write_file("page.tsx", app_tks, Some(FileKind::ClientComponent));
 
-                <button onClick={() => setCount((count) => count + 1)}>
-                    Count is {count}
-                </button>
-            </>
-        }
-    };
+    init()?;
 
-    write_file("page.tsx", app_tks, Some(FileKind::ClientComponent));
+    Ok(())
 }

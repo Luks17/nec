@@ -10,4 +10,6 @@ pub enum Error {
 
     #[error("Failed to write directory: {0}")]
     CouldNotWriteDir(String),
+    #[error("Failed to copy directory: {0}")]
+    CouldNotCopyDir(String),
 }

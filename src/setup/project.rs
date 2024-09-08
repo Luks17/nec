@@ -1,8 +1,6 @@
 use super::error::Error;
-use std::{
-    fs::create_dir_all,
-    path::{Path, PathBuf},
-};
+use crate::core::utils::copy_dir_all;
+use std::path::{Path, PathBuf};
 use strum::IntoEnumIterator;
 use which::which;
 
@@ -51,9 +49,19 @@ impl Project {
     pub fn create_structure(&self) -> Result<(), Error> {
         self.is_output_path_clean()?;
 
-        let target_dirs = format!("{}/src/app", self.output_path);
+        let directories = vec![
+            (".nec_modules/config", ""),
+            (".nec_modules/components", "src/app/(components)"),
+            (".nec_modules/database", "src/database"),
+            (".nec_modules/lib", "src/lib"),
+        ];
 
-        create_dir_all(&target_dirs).map_err(|_| Error::CouldNotWriteDir(target_dirs))?;
+        for (source, destination_suffix) in directories {
+            let target_dir = source.to_string();
+            let destination = format!("{}/{}", self.output_path, destination_suffix);
+            copy_dir_all(&target_dir, destination)
+                .map_err(|_| Error::CouldNotCopyDir(target_dir))?;
+        }
 
         Ok(())
     }
