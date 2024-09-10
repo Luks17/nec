@@ -10,5 +10,6 @@ pub struct DatabaseSchema {
     #[serde_inline_default(false)]
     pub use_docker: bool,
 
+    #[serde(default)]
     pub credentials: CredentialsSchema,
 }
