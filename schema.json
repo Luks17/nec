@@ -1,0 +1,64 @@
+{
+  "themes": {
+    "list": [
+      "cupcake",
+      "corporate",
+      "dracula",
+      "business"
+    ],
+    "default": "cupcake",
+    "custom": {
+      "name": "meuTema",
+      "base": "light",
+      "colors": {
+        "primary": "#a991f7",
+        "primary_content": "#ffffff"
+      },
+      "rounded": "1rem"
+    }
+  },
+  "database": {
+    "use_docker": false,
+    "credentials": {
+      "name": "meuBanco",
+      "host": "localhost",
+      "port": "3306",
+      "user": "root",
+      "password": "123456"
+    }
+  },
+  "globals": {
+    "DEFAULT_INPUT_LENGTH": 50,
+    "TEXT_AREA_HEIGHT": 4
+  },
+  "users": {
+    "roles": [
+      "NEW_USER",
+      "HAS_SITUACAO",
+      "HAS_SOLICITACAO"
+    ],
+    "extra_fields": {
+      "email": {
+        "type": "email"
+      },
+      "cpf": {
+        "type": "cpf"
+      },
+      "phone": {
+        "type": "phone"
+      },
+      "idade": {
+        "type": "number",
+        "min": 18,
+        "length": 3
+      }
+    },
+    "initial_admin": {
+      "name": "Nestor Almeida",
+      "password": "123456",
+      "email": "nestor.almeida@gmail.com",
+      "cpf": "012.345.678-99",
+      "phone": "+55(11)00000-0001"
+    }
+  }
+}

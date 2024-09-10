@@ -23,7 +23,7 @@ pub fn init() -> Result<()> {
         "Running {} install...",
         project.pkg_manager.to_string_lossy()
     );
-    project.install_deps()?;
+    // project.install_deps()?;
 
     Ok(())
 }
