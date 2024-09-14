@@ -1,9 +1,10 @@
 use serde::Deserialize;
 use serde_default::DefaultFromSerde;
 use serde_inline_default::serde_inline_default;
+use serde_valid::Validate;
 
 #[serde_inline_default]
-#[derive(Deserialize, Debug, DefaultFromSerde)]
+#[derive(Deserialize, Debug, Validate, DefaultFromSerde)]
 pub struct CredentialsSchema {
     #[serde_inline_default("nec".to_string())]
     pub name: String,
