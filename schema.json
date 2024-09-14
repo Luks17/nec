@@ -37,28 +37,35 @@
       "HAS_SITUACAO",
       "HAS_SOLICITACAO"
     ],
-    "extra_fields": {
-      "email": {
-        "type": "email"
+    "extra_fields": [
+      {
+        "name": "email",
+        "field_type": "email"
       },
-      "cpf": {
-        "type": "cpf"
+      {
+        "name": "cpf",
+        "field_type": "cpf"
       },
-      "phone": {
-        "type": "phone"
+      {
+        "name": "phone",
+        "field_type": "phone"
       },
-      "idade": {
-        "type": "number",
+      {
+        "name": "idade",
+        "field_type": "number",
         "min": 18,
         "length": 3
       }
-    },
+    ],
     "initial_admin": {
       "name": "Nestor Almeida",
       "password": "123456",
-      "email": "nestor.almeida@gmail.com",
-      "cpf": "012.345.678-99",
-      "phone": "+55(11)00000-0001"
+      "extra": [
+        "nestor.almeida@gmail.com",
+        "012.345.678-99",
+        "+55(11)00000-0001",
+        "19"
+      ]
     }
   }
 }
