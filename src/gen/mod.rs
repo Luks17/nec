@@ -1,10 +1,8 @@
-mod user;
-
-use user::user_model;
+mod database;
 
 use crate::{schema::RootSchema, setup::project::Project};
 
-pub fn start(project: Project, _schema: RootSchema) {
-    let user_tks = user_model();
+pub fn start(project: Project, schema: RootSchema) {
+    let user_tks = schema.users.user_model();
     project.write_file("src/database/models/Usuario.ts", user_tks, None);
 }
