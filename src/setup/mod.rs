@@ -1,12 +1,12 @@
-pub mod error;
+mod error;
 mod modules;
-mod project;
+pub mod project;
 
 use anyhow::Result;
 use project::Project;
 use std::path::Path;
 
-pub fn init() -> Result<()> {
+pub fn init_project() -> Result<Project> {
     println!("Initializing project...");
     let project = Project::new("output")?;
 
@@ -25,5 +25,5 @@ pub fn init() -> Result<()> {
     );
     // project.install_deps()?;
 
-    Ok(())
+    Ok(project)
 }
