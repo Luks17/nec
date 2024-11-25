@@ -1,0 +1,646 @@
+{
+	"themes": {
+		"list": [
+			"cupcake",
+			"corporate",
+			"dracula",
+			"business"
+		],
+		"default": "cupcake",
+		"custom": [
+			{
+				"name": "spring",
+				"base": "light",
+				"colors": {
+					"primary": "#42AA00",
+					"secondary": "#7A00C2",
+					"accent": "#377CFB"
+				},
+				"utilities": {
+					"--rounded-box": "1rem",
+					"--rounded-btn": "0.5rem"
+				}
+			}
+		]
+	},
+	"database": {
+		"name": "atendimento-vulneraveis",
+		"host": "localhost",
+		"port": "3306",
+		"user": "root",
+		"password": "123456"
+	},
+	"form_globals": {
+		"default_input_length": 30,
+		"textarea_height": 4,
+		"textarea_width": 30
+	},
+	"menu_sections": [
+		{
+			"name": "Cidadão",
+			"items": [
+				{
+					"label": "Registrar Situação",
+					"url": "situacao/registrar",
+					"protection": {
+						"role": "NEW_USER",
+						"strict": true
+					}
+				},
+				{
+					"label": "Visualizar Situação",
+					"url": "situacao/visualizar",
+					"protection": {
+						"role": "HAS_SITUACAO",
+						"disallow_role": "IS_ADMIN"
+					}
+				},
+				{
+					"label": "Registrar Solicitação de Auxílio",
+					"url": "solicitacao-auxilio/registrar",
+					"protection": {
+						"role": "HAS_SITUACAO",
+						"disallow_role": "IS_ADMIN"
+					}
+				},
+				{
+					"label": "Visualizar Solicitação de Auxílio",
+					"url": "solicitacao-auxilio/listar",
+					"protection": {
+						"role": "HAS_SITUACAO",
+						"disallow_role": "IS_ADMIN"
+					}
+				}
+			]
+		},
+		{
+			"title": "Administrador",
+			"items": [
+				{
+					"label": "Administrar Vulneráveis",
+					"url": "administrar-vulneraveis/listar",
+					"protection": {
+						"role": "IS_ADMIN"
+					}
+				},
+				{
+					"label": "Visualizar Totalizadores",
+					"url": "visualizar-totalizadores",
+					"protection": {
+						"role": "IS_ADMIN"
+					}
+				}
+			]
+		}
+	],
+	"entities": [
+		{
+			"name": "Usuario",
+			"timestamps": true,
+			"relations": [
+				{
+					"type": "one_to_many",
+					"entity": "Solicitacao"
+				},
+				{
+					"type": "one_to_one",
+					"entity": "Situacao"
+				},
+				{
+					"type": "one_to_many",
+					"entity": "StatusUsuario"
+				}
+			],
+			"attributes": [
+				{
+					"name": "id",
+					"primary": true,
+					"details": {
+						"type": "char",
+						"length": 36
+					}
+				},
+				{
+					"name": "perfil",
+					"details": {
+						"type": "enum",
+						"enum_items": [
+							{
+								"label": "Cidadão",
+								"value": "cidadao"
+							},
+							{
+								"label": "Administrador",
+								"value": "admin"
+							}
+						]
+					}
+				},
+				{
+					"name": "nome",
+					"details": {
+						"type": "varchar"
+					}
+				},
+				{
+					"name": "email",
+					"details": {
+						"type": "varchar",
+						"unique": true
+					}
+				},
+				{
+					"name": "cpf",
+					"details": {
+						"type": "char",
+						"length": 14,
+						"unique": true
+					}
+				},
+				{
+					"name": "telefone",
+					"details": {
+						"type": "char",
+						"length": 15,
+						"unique": true
+					}
+				},
+				{
+					"name": "senha",
+					"details": {
+						"type": "varchar"
+					}
+				}
+			]
+		},
+		{
+			"name": "StatusUsuario",
+			"relations": [
+				{
+					"type": "many_to_one",
+					"entity": "Usuario",
+					"use_key_as_primary": true
+				}
+			],
+			"attributes": [
+				{
+					"name": "status",
+					"details": {
+						"type": "enum",
+						"enum_items": [
+							{
+								"label": "Inativo",
+								"value": "inativo"
+							},
+							{
+								"label": "Ativo",
+								"value": "ativo"
+							},
+							{
+								"label": "Situação Pendente",
+								"value": "situacao_pendente"
+							},
+							{
+								"label": "Solicitação Pendente",
+								"value": "solicitacao_pendente"
+							}
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Situacao",
+			"timestamps": true,
+			"relations": [
+				{
+					"type": "many_to_one",
+					"entity": "Usuario",
+					"use_key_as_primary": true
+				}
+			],
+			"attributes": [
+				{
+					"name": "moradia",
+					"details": {
+						"type": "enum",
+						"enum_items": [
+							{
+								"label": "Casa Própria",
+								"value": "casa_propria"
+							},
+							{
+								"label": "Aluguel",
+								"value": "aluguel"
+							}
+						]
+					}
+				},
+				{
+					"name": "total_adultos",
+					"details": {
+						"type": "int",
+						"min": 0
+					}
+				},
+				{
+					"name": "total_criancas",
+					"details": {
+						"type": "int",
+						"min": 0
+					}
+				},
+				{
+					"name": "renda_familiar",
+					"details": {
+						"type": "monetary"
+					}
+				},
+				{
+					"name": "valor_aluguel",
+					"details": {
+						"type": "monetary",
+						"optional": true
+					}
+				}
+			]
+		},
+		{
+			"name": "Solicitacao",
+			"timestamps": true,
+			"attributes": [
+				{
+					"name": "id",
+					"primary": true,
+					"details": {
+						"type": "char",
+						"length": 36
+					}
+				},
+				{
+					"name": "estado",
+					"details": {
+						"type": "enum",
+						"default": "pendente",
+						"enum_items": [
+							{
+								"label": "Pendente",
+								"value": "pendente"
+							},
+							{
+								"label": "Reprovada",
+								"value": "reprovada"
+							},
+							{
+								"label": "Aprovada",
+								"value": "aprovada"
+							}
+						]
+					}
+				},
+				{
+					"name": "tipo_problema",
+					"details": {
+						"type": "enum",
+						"enum_items": [
+							{
+								"label": "Catástrofe",
+								"value": "catastrofe"
+							},
+							{
+								"label": "Doença",
+								"value": "doenca"
+							},
+							{
+								"label": "Acidente",
+								"value": "acidente"
+							},
+							{
+								"label": "Financeiro",
+								"value": "financeiro"
+							}
+						]
+					}
+				},
+				{
+					"name": "descricao_problema",
+					"details": {
+						"type": "text"
+					}
+				}
+			],
+			"child_entities": {
+				"discriminator": "tipo_auxilio",
+				"list": [
+					{
+						"name": "Auxílio Medicamento",
+						"attributes": [
+							{
+								"name": "vl_auxilio_medicamento",
+								"details": {
+									"type": "monetary"
+								}
+							}
+						]
+					},
+					{
+						"name": "Cesta Básica",
+						"attributes": [
+							{
+								"name": "quantidade_cestas",
+								"details": {
+									"type": "number",
+									"min": 0
+								}
+							}
+						]
+					},
+					{
+						"name": "Vaga Creche",
+						"attributes": [
+							{
+								"name": "numero_vagas_creche",
+								"details": {
+									"type": "number",
+									"min": 0
+								}
+							}
+						]
+					},
+					{
+						"name": "Vaga Escola",
+						"attributes": [
+							{
+								"name": "numero_vagas_escola",
+								"details": {
+									"type": "number",
+									"min": 0
+								}
+							}
+						]
+					}
+				]
+			}
+		}
+	],
+	"pages": {
+		"items_details": [
+			{
+				"key": "visualizar-situacao",
+				"entity": "Situacao",
+				"path": "situacao/visualizar",
+				"fields": [
+					{
+						"label": "Moradia",
+						"target": "moradia"
+					},
+					{
+						"label": "Total de adultos",
+						"target": "total_adultos"
+					},
+					{
+						"label": "Total de crianças",
+						"target": "total_criancas"
+					},
+					{
+						"label": "Renda familiar",
+						"target": "renda_familiar"
+					},
+					{
+						"label": "Valor do aluguel",
+						"target": "valor_aluguel"
+					}
+				]
+			},
+			{
+				"key": "visualizar-solicitacao",
+				"entity": "Solicitacao",
+				"path": "solicitacoes-auxilio/visualizar",
+				"fields": [
+					{
+						"label": "Estado",
+						"target": "estado"
+					},
+					{
+						"label": "Tipo de problema",
+						"target": "tipo_problema"
+					},
+					{
+						"label": "Descrição",
+						"target": "descricao_problema"
+					},
+					{
+						"label": "Valor do auxílio medicamento",
+						"target": "vl_auxilio_medicamento"
+					},
+					{
+						"label": "Quantidade de cestas",
+						"target": "quantidade_cestas"
+					},
+					{
+						"label": "Quantidade de vagas na creche",
+						"target": "numero_vagas_creche"
+					},
+					{
+						"label": "Quantidade de vagas na escola",
+						"target": "numero_vagas_escola"
+					}
+				]
+			}
+		],
+		"forms": [
+			{
+				"key": "registrar-situacao",
+				"entity": "Situacao",
+				"path": "situacao/registrar",
+				"on_success_execute": "increment_role",
+				"sections": [
+					{
+						"name": "Registro",
+						"fields": [
+							{
+								"target": "moradia",
+								"label": "Moradia"
+							},
+							{
+								"target": "valor_aluguel",
+								"label": "Valor do aluguel",
+								"depends_on": {
+									"field": "moradia",
+									"value": "aluguel"
+								}
+							},
+							{
+								"target": "total_adultos",
+								"label": "Total de adultos na moradia",
+								"placeholder": "Quantas?"
+							},
+							{
+								"target": "total_criancas",
+								"label": "Total de crianças na moradia",
+								"placeholder": "Quantos?"
+							},
+							{
+								"target": "renda_familiar",
+								"label": "Renda familiar"
+							}
+						]
+					}
+				]
+			},
+			{
+				"key": "registrar-solicitacao",
+				"entity": "Solicitacao",
+				"path": "solicitacao-auxilio/registrar",
+				"on_success_execute": "increment_role",
+				"sections": [
+					{
+						"name": "Motivo da Solicitação",
+						"fields": [
+							{
+								"label": "Tipo de problema",
+								"target": "tipo_problema"
+							},
+							{
+								"label": "Descrição do problema",
+								"target": "descricao_problema"
+							}
+						]
+					},
+					{
+						"name": "Auxílio Solicitado",
+						"fields": [
+							{
+								"label": "Tipo de Auxílio",
+								"target": "tipo_auxilio"
+							},
+							{
+								"label": "Valor do Auxílio Medicamento",
+								"target": "vl_auxilio_medicamento",
+								"depends_on": {
+									"field": "tipo_auxilio",
+									"value": "auxilio_medicamento"
+								}
+							},
+							{
+								"label": "Quantidade de Cestas Básicas",
+								"target": "quantidade_cestas",
+								"depends_on": {
+									"field": "tipo_auxilio",
+									"value": "cesta_basica"
+								}
+							},
+							{
+								"label": "Número de Vagas para Creche",
+								"target": "numero_vagas_creche",
+								"depends_on": {
+									"field": "tipo_auxilio",
+									"value": "vaga_creche"
+								}
+							},
+							{
+								"label": "Número de Vagas para Escola",
+								"target": "numero_vagas_escola",
+								"depends_on": {
+									"field": "tipo_auxilio",
+									"value": "vaga_escola"
+								}
+							}
+						]
+					}
+				]
+			}
+		],
+		"tables": [
+			{
+				"key": "listar-solicitacoes",
+				"entity": "Solicitacao",
+				"path": "solicitacoes-auxilio/listar",
+				"fields": [
+					{
+						"label": "Data de criação",
+						"target": "created_at"
+					},
+					{
+						"label": "Estado",
+						"target": "estado"
+					},
+					{
+						"label": "Tipo de Auxílio",
+						"target": "tipo_auxilio"
+					},
+					{
+						"label": "Tipo de Problema",
+						"target": "tipo_problema"
+					},
+					{
+						"label": "Descrição do Problema",
+						"target": "descricao_problema"
+					}
+				],
+				"links_column": {
+					"label": "Ações",
+					"list": [
+						{
+							"name": "Expandir",
+							"target": "visualizar-solicitacao"
+						}
+					]
+				}
+			},
+			{
+				"key": "listar-vulneraveis",
+				"entity": "Usuario",
+				"path": "administrar-vulneraveis/listar",
+				"fields": [
+					{
+						"label": "nome",
+						"target": "nome"
+					},
+					{
+						"label": "CPF",
+						"target": "cpf"
+					},
+					{
+						"label": "Email",
+						"target": "email"
+					},
+					{
+						"label": "Telefone",
+						"target": "telefone"
+					}
+				],
+				"links-column": {
+					"label": "Ações",
+					"list": [
+						{
+							"name": "Situação",
+							"target": "visualizar-situacao"
+						},
+						{
+							"name": "Solicitações",
+							"target": "listar-solicitacoes"
+						}
+					]
+				}
+			}
+		],
+		"totalizers_pages": [
+			{
+				"key": "totalizadores-admin",
+				"list": [
+					{
+						"title": "Usuários registrados nos últimos meses",
+						"chart_type": "line",
+						"data_function": "getLastMonthsUsersCount"
+					},
+					{
+						"title": "Estados das solicitações",
+						"chart_type": "pizza",
+						"data_function": "getSolicitacoesStatusCounts"
+					}
+				]
+			}
+		]
+	}
+}
