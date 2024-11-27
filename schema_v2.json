@@ -35,64 +35,6 @@
 		"textarea_height": 4,
 		"textarea_width": 30
 	},
-	"menu_sections": [
-		{
-			"name": "Cidadão",
-			"items": [
-				{
-					"label": "Registrar Situação",
-					"url": "situacao/registrar",
-					"protection": {
-						"role": "NEW_USER",
-						"strict": true
-					}
-				},
-				{
-					"label": "Visualizar Situação",
-					"url": "situacao/visualizar",
-					"protection": {
-						"role": "HAS_SITUACAO",
-						"disallow_role": "IS_ADMIN"
-					}
-				},
-				{
-					"label": "Registrar Solicitação de Auxílio",
-					"url": "solicitacao-auxilio/registrar",
-					"protection": {
-						"role": "HAS_SITUACAO",
-						"disallow_role": "IS_ADMIN"
-					}
-				},
-				{
-					"label": "Visualizar Solicitação de Auxílio",
-					"url": "solicitacao-auxilio/listar",
-					"protection": {
-						"role": "HAS_SITUACAO",
-						"disallow_role": "IS_ADMIN"
-					}
-				}
-			]
-		},
-		{
-			"title": "Administrador",
-			"items": [
-				{
-					"label": "Administrar Vulneráveis",
-					"url": "administrar-vulneraveis/listar",
-					"protection": {
-						"role": "IS_ADMIN"
-					}
-				},
-				{
-					"label": "Visualizar Totalizadores",
-					"url": "visualizar-totalizadores",
-					"protection": {
-						"role": "IS_ADMIN"
-					}
-				}
-			]
-		}
-	],
 	"entities": [
 		{
 			"name": "Usuario",
@@ -253,13 +195,13 @@
 				{
 					"name": "renda_familiar",
 					"details": {
-						"type": "monetary"
+						"type": "decimal"
 					}
 				},
 				{
 					"name": "valor_aluguel",
 					"details": {
-						"type": "monetary",
+						"type": "decimal",
 						"optional": true
 					}
 				}
@@ -268,6 +210,12 @@
 		{
 			"name": "Solicitacao",
 			"timestamps": true,
+			"relations": [
+				{
+					"type": "many_to_one",
+					"entity": "Usuario"
+				}
+			],
 			"attributes": [
 				{
 					"name": "id",
@@ -381,6 +329,79 @@
 					}
 				]
 			}
+		}
+	],
+	"menu_sections": [
+		{
+			"name": "Cidadão",
+			"items": [
+				{
+					"label": "Registrar Situação",
+					"url": "situacao/registrar",
+					"allowed_perfil": [
+						"cidadao"
+					],
+					"allowed_status": [
+						"ativo",
+						"situacao_pendente"
+					]
+				},
+				{
+					"label": "Visualizar Situação",
+					"url": "situacao/visualizar",
+					"allowed_perfil": [
+						"cidadao"
+					],
+					"allowed_status": [
+						"ativo"
+					]
+				},
+				{
+					"label": "Registrar Solicitação de Auxílio",
+					"url": "solicitacao-auxilio/registrar",
+					"allowed_perfil": [
+						"cidadao"
+					],
+					"allowed_status": [
+						"ativo"
+					]
+				},
+				{
+					"label": "Visualizar Solicitação de Auxílio",
+					"url": "solicitacao-auxilio/listar",
+					"allowed_perfil": [
+						"cidadao"
+					],
+					"allowed_status": [
+						"ativo"
+					]
+				}
+			]
+		},
+		{
+			"title": "Administrador",
+			"items": [
+				{
+					"label": "Administrar Vulneráveis",
+					"url": "administrar-vulneraveis/listar",
+					"allowed_perfil": [
+						"admin"
+					],
+					"allowed_status": [
+						"ativo"
+					]
+				},
+				{
+					"label": "Visualizar Totalizadores",
+					"url": "visualizar-totalizadores",
+					"allowed_perfil": [
+						"admin"
+					],
+					"allowed_status": [
+						"ativo"
+					]
+				}
+			]
 		}
 	],
 	"pages": {
