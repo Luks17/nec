@@ -63,7 +63,7 @@
 					}
 				},
 				{
-					"name": "perfil",
+					"name": "profile",
 					"details": {
 						"type": "enum",
 						"enum_items": [
@@ -338,7 +338,7 @@
 				{
 					"label": "Registrar Situação",
 					"url": "situacao/registrar",
-					"allowed_perfil": [
+					"allowed_profile": [
 						"cidadao"
 					],
 					"allowed_status": [
@@ -349,7 +349,7 @@
 				{
 					"label": "Visualizar Situação",
 					"url": "situacao/visualizar",
-					"allowed_perfil": [
+					"allowed_profile": [
 						"cidadao"
 					],
 					"allowed_status": [
@@ -359,7 +359,7 @@
 				{
 					"label": "Registrar Solicitação de Auxílio",
 					"url": "solicitacao-auxilio/registrar",
-					"allowed_perfil": [
+					"allowed_profile": [
 						"cidadao"
 					],
 					"allowed_status": [
@@ -369,7 +369,7 @@
 				{
 					"label": "Visualizar Solicitação de Auxílio",
 					"url": "solicitacao-auxilio/listar",
-					"allowed_perfil": [
+					"allowed_profile": [
 						"cidadao"
 					],
 					"allowed_status": [
@@ -384,7 +384,7 @@
 				{
 					"label": "Administrar Vulneráveis",
 					"url": "administrar-vulneraveis/listar",
-					"allowed_perfil": [
+					"allowed_profile": [
 						"admin"
 					],
 					"allowed_status": [
@@ -394,7 +394,7 @@
 				{
 					"label": "Visualizar Totalizadores",
 					"url": "visualizar-totalizadores",
-					"allowed_perfil": [
+					"allowed_profile": [
 						"admin"
 					],
 					"allowed_status": [
@@ -405,7 +405,7 @@
 		}
 	],
 	"pages": {
-		"items_details": [
+		"details": [
 			{
 				"key": "visualizar-situacao",
 				"entity": "Situacao",
@@ -474,10 +474,9 @@
 				"key": "registrar-situacao",
 				"entity": "Situacao",
 				"path": "situacao/registrar",
-				"on_success_execute": "increment_role",
 				"sections": [
 					{
-						"name": "Registro",
+						"title": "Registro",
 						"fields": [
 							{
 								"target": "moradia",
@@ -513,10 +512,9 @@
 				"key": "registrar-solicitacao",
 				"entity": "Solicitacao",
 				"path": "solicitacao-auxilio/registrar",
-				"on_success_execute": "increment_role",
 				"sections": [
 					{
-						"name": "Motivo da Solicitação",
+						"tile": "Motivo da Solicitação",
 						"fields": [
 							{
 								"label": "Tipo de problema",
@@ -529,7 +527,7 @@
 						]
 					},
 					{
-						"name": "Auxílio Solicitado",
+						"title": "Auxílio Solicitado",
 						"fields": [
 							{
 								"label": "Tipo de Auxílio",
@@ -646,7 +644,7 @@
 				}
 			}
 		],
-		"totalizers_pages": [
+		"totalizers": [
 			{
 				"key": "totalizadores-admin",
 				"list": [
