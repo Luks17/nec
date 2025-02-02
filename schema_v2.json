@@ -480,11 +480,13 @@
 						"fields": [
 							{
 								"target": "moradia",
-								"label": "Moradia"
+								"label": "Moradia",
+								"component": "combobox"
 							},
 							{
 								"target": "valor_aluguel",
 								"label": "Valor do aluguel",
+								"placeholder": "Valor",
 								"depends_on": {
 									"field": "moradia",
 									"value": "aluguel"
@@ -506,6 +508,13 @@
 							}
 						]
 					}
+				],
+				"actions": [
+					{
+						"label": "Confirmar",
+						"function": "createUserSituation",
+						"style": "primary"
+					}
 				]
 			},
 			{
@@ -514,7 +523,7 @@
 				"path": "solicitacao-auxilio/registrar",
 				"sections": [
 					{
-						"tile": "Motivo da Solicitação",
+						"title": "Motivo da Solicitação",
 						"fields": [
 							{
 								"label": "Tipo de problema",
@@ -575,7 +584,7 @@
 				"key": "listar-solicitacoes",
 				"entity": "Solicitacao",
 				"path": "solicitacoes-auxilio/listar",
-				"fields": [
+				"columns": [
 					{
 						"label": "Data de criação",
 						"target": "created_at"
@@ -597,7 +606,7 @@
 						"target": "descricao_problema"
 					}
 				],
-				"links_column": {
+				"actions_column": {
 					"label": "Ações",
 					"list": [
 						{
@@ -611,7 +620,7 @@
 				"key": "listar-vulneraveis",
 				"entity": "Usuario",
 				"path": "administrar-vulneraveis/listar",
-				"fields": [
+				"columns": [
 					{
 						"label": "nome",
 						"target": "nome"
@@ -629,7 +638,7 @@
 						"target": "telefone"
 					}
 				],
-				"links-column": {
+				"actions_column": {
 					"label": "Ações",
 					"list": [
 						{
