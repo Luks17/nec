@@ -1,5 +1,5 @@
 use anyhow::Result;
-use nec::{gen, schema::RootSchema, setup::init_project};
+use nec::{gen::Generator, schema::RootSchema, setup::init_project};
 use serde_valid::json::FromJsonReader;
 use std::fs::File;
 
@@ -9,7 +9,9 @@ fn main() -> Result<()> {
     let file = File::open("schema.json")?;
     let schema = RootSchema::from_json_reader(file)?;
 
-    gen::start(project, schema);
+    let generator = Generator::new(project, schema);
+
+    generator.generate();
 
     Ok(())
 }

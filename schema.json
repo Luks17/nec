@@ -57,61 +57,47 @@
 				{
 					"name": "id",
 					"primary": true,
-					"details": {
-						"type": "char",
-						"length": 36
-					}
+					"type": "string",
+					"length": 36
 				},
 				{
-					"name": "profile",
-					"details": {
-						"type": "enum",
-						"enum_items": [
-							{
-								"label": "Cidadão",
-								"value": "cidadao"
-							},
-							{
-								"label": "Administrador",
-								"value": "admin"
-							}
-						]
-					}
+					"name": "perfil",
+					"type": "enum",
+					"enum_items": [
+						{
+							"label": "Cidadão",
+							"value": "cidadao"
+						},
+						{
+							"label": "Administrador",
+							"value": "admin"
+						}
+					]
 				},
 				{
 					"name": "nome",
-					"details": {
-						"type": "varchar"
-					}
+					"type": "string"
 				},
 				{
 					"name": "email",
-					"details": {
-						"type": "varchar",
-						"unique": true
-					}
+					"type": "string",
+					"unique": true
 				},
 				{
 					"name": "cpf",
-					"details": {
-						"type": "char",
-						"length": 14,
-						"unique": true
-					}
+					"type": "string",
+					"length": 14,
+					"unique": true
 				},
 				{
 					"name": "telefone",
-					"details": {
-						"type": "char",
-						"length": 15,
-						"unique": true
-					}
+					"type": "string",
+					"length": 15,
+					"unique": true
 				},
 				{
 					"name": "senha",
-					"details": {
-						"type": "varchar"
-					}
+					"type": "string"
 				}
 			]
 		},
@@ -127,27 +113,25 @@
 			"attributes": [
 				{
 					"name": "status",
-					"details": {
-						"type": "enum",
-						"enum_items": [
-							{
-								"label": "Inativo",
-								"value": "inativo"
-							},
-							{
-								"label": "Ativo",
-								"value": "ativo"
-							},
-							{
-								"label": "Situação Pendente",
-								"value": "situacao_pendente"
-							},
-							{
-								"label": "Solicitação Pendente",
-								"value": "solicitacao_pendente"
-							}
-						]
-					}
+					"type": "enum",
+					"enum_items": [
+						{
+							"label": "Inativo",
+							"value": "inativo"
+						},
+						{
+							"label": "Ativo",
+							"value": "ativo"
+						},
+						{
+							"label": "Situação Pendente",
+							"value": "situacao_pendente"
+						},
+						{
+							"label": "Solicitação Pendente",
+							"value": "solicitacao_pendente"
+						}
+					]
 				}
 			]
 		},
@@ -164,46 +148,36 @@
 			"attributes": [
 				{
 					"name": "moradia",
-					"details": {
-						"type": "enum",
-						"enum_items": [
-							{
-								"label": "Casa Própria",
-								"value": "casa_propria"
-							},
-							{
-								"label": "Aluguel",
-								"value": "aluguel"
-							}
-						]
-					}
+					"type": "enum",
+					"enum_items": [
+						{
+							"label": "Casa Própria",
+							"value": "casa_propria"
+						},
+						{
+							"label": "Aluguel",
+							"value": "aluguel"
+						}
+					]
 				},
 				{
 					"name": "total_adultos",
-					"details": {
-						"type": "int",
-						"min": 0
-					}
+					"type": "integer",
+					"min": 0
 				},
 				{
 					"name": "total_criancas",
-					"details": {
-						"type": "int",
-						"min": 0
-					}
+					"type": "integer",
+					"min": 0
 				},
 				{
 					"name": "renda_familiar",
-					"details": {
-						"type": "decimal"
-					}
+					"type": "decimal"
 				},
 				{
 					"name": "valor_aluguel",
-					"details": {
-						"type": "decimal",
-						"optional": true
-					}
+					"type": "decimal",
+					"optional": true
 				}
 			]
 		},
@@ -220,61 +194,53 @@
 				{
 					"name": "id",
 					"primary": true,
-					"details": {
-						"type": "char",
-						"length": 36
-					}
+					"type": "string",
+					"length": 36
 				},
 				{
 					"name": "estado",
-					"details": {
-						"type": "enum",
-						"default": "pendente",
-						"enum_items": [
-							{
-								"label": "Pendente",
-								"value": "pendente"
-							},
-							{
-								"label": "Reprovada",
-								"value": "reprovada"
-							},
-							{
-								"label": "Aprovada",
-								"value": "aprovada"
-							}
-						]
-					}
+					"type": "enum",
+					"default": "pendente",
+					"enum_items": [
+						{
+							"label": "Pendente",
+							"value": "pendente"
+						},
+						{
+							"label": "Reprovada",
+							"value": "reprovada"
+						},
+						{
+							"label": "Aprovada",
+							"value": "aprovada"
+						}
+					]
 				},
 				{
 					"name": "tipo_problema",
-					"details": {
-						"type": "enum",
-						"enum_items": [
-							{
-								"label": "Catástrofe",
-								"value": "catastrofe"
-							},
-							{
-								"label": "Doença",
-								"value": "doenca"
-							},
-							{
-								"label": "Acidente",
-								"value": "acidente"
-							},
-							{
-								"label": "Financeiro",
-								"value": "financeiro"
-							}
-						]
-					}
+					"type": "enum",
+					"enum_items": [
+						{
+							"label": "Catástrofe",
+							"value": "catastrofe"
+						},
+						{
+							"label": "Doença",
+							"value": "doenca"
+						},
+						{
+							"label": "Acidente",
+							"value": "acidente"
+						},
+						{
+							"label": "Financeiro",
+							"value": "financeiro"
+						}
+					]
 				},
 				{
 					"name": "descricao_problema",
-					"details": {
-						"type": "text"
-					}
+					"type": "text"
 				}
 			],
 			"child_entities": {
@@ -285,9 +251,7 @@
 						"attributes": [
 							{
 								"name": "vl_auxilio_medicamento",
-								"details": {
-									"type": "monetary"
-								}
+								"type": "decimal"
 							}
 						]
 					},
@@ -296,10 +260,8 @@
 						"attributes": [
 							{
 								"name": "quantidade_cestas",
-								"details": {
-									"type": "number",
-									"min": 0
-								}
+								"type": "integer",
+								"min": 0
 							}
 						]
 					},
@@ -308,10 +270,8 @@
 						"attributes": [
 							{
 								"name": "numero_vagas_creche",
-								"details": {
-									"type": "number",
-									"min": 0
-								}
+								"type": "integer",
+								"min": 0
 							}
 						]
 					},
@@ -320,10 +280,8 @@
 						"attributes": [
 							{
 								"name": "numero_vagas_escola",
-								"details": {
-									"type": "number",
-									"min": 0
-								}
+								"type": "integer",
+								"min": 0
 							}
 						]
 					}

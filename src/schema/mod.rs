@@ -1,12 +1,12 @@
 pub mod database;
+pub mod entity;
 pub mod themes;
-pub mod users;
 
 use database::DatabaseSchema;
+use entity::EntitySchema;
 use serde::Deserialize;
 use serde_valid::Validate;
 use themes::ThemesSchema;
-use users::UsersSchema;
 
 #[derive(Deserialize, Debug, Validate)]
 pub struct RootSchema {
@@ -15,5 +15,5 @@ pub struct RootSchema {
 
     pub database: DatabaseSchema,
 
-    pub users: UsersSchema,
+    pub entities: Vec<EntitySchema>,
 }
